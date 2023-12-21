@@ -1,0 +1,58 @@
+#include "Adafruit_seesaw.h"
+#include "stdio.h"
+Adafruit_seesaw ss;
+int moisture_data = 0;
+const int photoresistorpin = A0;
+const int LEDPIN = 7;
+void setup()
+{
+
+
+  Serial.begin(9600);
+
+  pinMode(12, OUTPUT);
+
+  pinMode(6, OUTPUT);
+  pinMode(photoresistorpin, INPUT);
+  pinMode(LEDPIN,OUTPUT);
+  Serial.begin(9600);
+}
+
+
+
+void loop()
+
+{
+
+  uint16_t sensor = ss.touchRead(0);
+  Serial.print("moisture level is ");
+
+  Serial.println(sensor);
+
+  if (sensor < 21) {
+
+    digitalWrite(12, HIGH);
+
+    digitalWrite(6, HIGH);
+
+  } else {
+
+    digitalWrite(12, LOW);
+
+    digitalWrite(6, LOW);
+
+  }
+
+  delay(1000);
+  int photovalue = analogRead(photoresistorpin);
+  Serial.print("light level is ");
+  Serial.println(photovalue);
+  
+  if (photovalue >=900){
+  digitalWrite(LEDPIN, HIGH);
+  }
+  else{
+  digitalWrite(LEDPIN, LOW);
+  }
+  delay(1000);
+    }
